@@ -3,7 +3,7 @@ export function pascalToKebab(value: string): string {
 }
 
 export function isSelector(x: any): x is string {
-    return (typeof x === "string") && x.length > 1;
+    return (typeof x === 'string') && x.length > 1;
 }
 
 export function isEmpty(value: any): boolean {
