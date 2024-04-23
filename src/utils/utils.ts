@@ -133,3 +133,15 @@ export function createElement<
     }
     return element;
 }
+
+interface ElementWithToggleClass extends Element {
+    toggleClass(className: string, force?: boolean): void;
+}
+
+export function toggleClass(element: ElementWithToggleClass, className: string, force?: boolean) {
+    if (force === undefined) {
+        element.classList.toggle(className);
+    } else {
+        element.classList.toggle(className, force);
+    }
+}

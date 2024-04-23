@@ -82,7 +82,7 @@ export class Card extends Component<ICard> {
 	}
 
 	set index(value: string) {
-		this._index.textContent = value;
+		this.setText(this._index, value);
 	}
 
 	get index(): string {
