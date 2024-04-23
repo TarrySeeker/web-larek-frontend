@@ -2,7 +2,7 @@ import './scss/styles.scss';
 
 import { Page } from './components/Page';
 import { cloneTemplate, ensureElement } from './utils/utils';
-import { EventEmitter } from './components/base/events';
+import { EventEmitter } from './components/base/Events';
 import { AppState, ProductItem } from './components/AppData';
 import { Card } from './components/Card';
 import { WebLarekAPI } from './components/WebLarekAPI';
