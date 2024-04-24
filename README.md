@@ -52,6 +52,10 @@ npm run build
 yarn build
 ```
 
+## Об архитектуре 
+
+Взаимодействия внутри приложения происходят через события. Модели инициализируют события, слушатели событий в основном коде выполняют передачу данных компонентам отображения, а также вычислениями между этой передачей, и еще они меняют значения в моделях.
+
 # Основные типы данных
 
 ## Интерфейс IPage.
@@ -182,12 +186,23 @@ interface ISuccess {
 
 ## Класс Model<T>
 Абстрактный базовый класс, для управления данными и их взаимодействия с системой событий.
+```
 - isModel - функция для проверки на модель.
+```
 Содержит метод:
 - emitChanges(event: string, payload?: object) - cообщить всем что модель поменялась.
 
 ## Класс Component<T>
-Абстрактный базовый класс, предоставляет инструментарий для работы с DOM в дочерних компонентах. Содержит методы:
+Абстрактный базовый класс, предоставляет инструментарий для работы с DOM в дочерних компонентах.
+container: HTMLElement: Это элемент DOM, который будет использоваться как контейнер для компонента. В этот контейнер будут добавляться создаваемые элементы, а также применяться различные операции DOM-манипуляции.
+```
+const containerElement = document.getElementById('container');
+const component = new MyComponent(containerElement);
+```
+element: HTMLElement - элемент DOM, у которого нужно переключить класс.
+className: string - имя класса, которое нужно переключить.
+force?: boolean - необязательный параметр, указывающий, нужно ли явно добавить или удалить класс (true - добавить, false - удалить). Если не указан, то класс будет переключен.
+
 - toggleClass(element: HTMLElement, className: string, force?: boolean) - переключить класс.
 - setText(element: HTMLElement, value: unknown) - установить текстовое содержимое.
 - setDisabled(element: HTMLElement, state: boolean) - сменить статус блокировки.
@@ -197,7 +212,13 @@ interface ISuccess {
 - render(data?: Partial<T>): HTMLElement - вернуть корневой DOM-элемент.
 
 ## Класс EventEmitter
-Базовый класс, центральный брокер событий. Позволяет компонентам подписываться на события и реагировать на них. Содержит методы:
+Базовый класс, центральный брокер событий. Позволяет компонентам подписываться на события и реагировать на них.
+В конструктор класса EventEmitter приходит один параметр:
+container: HTMLElement: Это элемент DOM, который будет использоваться как контейнер для управления событиями. В этот контейнер будут добавляться обработчики событий, и именно он будет являться точкой входа для взаимодействия с событиями в рамках экземпляра класса EventEmitter.
+```
+const eventContainer = document.getElementById('event-container');
+const eventEmitter = new EventEmitter(eventContainer);
+```
 - on<T extends object>(eventName: EventName, callback: (event: T) => void) - установить обработчик на событие.
 - off(eventName: EventName, callback: Subscriber) - снять обработчик с события.
 - emit<T extends object>(eventName: string, data?: T) - инициировать событие с данными.
@@ -206,6 +227,9 @@ interface ISuccess {
 - trigger<T extends object>(eventName: string, context?: Partial<T>) - сделать коллбек триггер, генерирующий событие при вызове.
 
 ## Класс Api
+```
+const api = new Api();
+```
 Базовый класс - клиент для взаимодействия с внешними API и сервером. Содержит методы:
 - handleResponse(response: Response): Promise<object> - обработчик ответа с сервера.
 - get(uri: string) - получить ответ с сервера.

@@ -9,10 +9,10 @@ import { WebLarekAPI } from './components/WebLarekAPI';
 import { API_URL, CDN_URL, PaymentMethods } from './utils/constants';
 import { IContactsForm, IOrder, IOrderForm } from './types';
 import { Modal } from './components/common/Modal';
-import { Basket } from './components/common/Basket';
+import { Basket } from './components/Basket';
 import { OrderForm } from './components/Order';
 import { Contacts } from './components/Contacts';
-import { Success } from './components/common/Success';
+import { Success } from './components/base/Success';
 
 const events = new EventEmitter();
 const api = new WebLarekAPI(CDN_URL, API_URL);
