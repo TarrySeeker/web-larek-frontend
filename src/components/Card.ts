@@ -64,7 +64,7 @@ export class Card extends Component<ICard> {
 		} else {
 			this.setText(this._price, 'Бесценно');
 			if (this._button) {
-				this._button.disabled = true;
+				this.setDisabled(this._button, true); // Заменяем установку атрибута disabled на использование метода setDisabled
 			}
 		}
 	}

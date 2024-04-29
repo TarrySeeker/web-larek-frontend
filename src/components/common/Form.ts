@@ -37,15 +37,11 @@ export class Form<T> extends Component<IFormState> {
     }
 
     set valid(value: boolean) {
-        this._submit.disabled = !value;
+        this.setDisabled(this._submit, !value);
     }
 
     set errors(value: string) {
         this.setText(this._errors, value);
-    }
-
-    protected setText(element: HTMLElement, text: string) {
-        element.textContent = text;
     }
 
     render(state: Partial<T> & IFormState) {
@@ -54,8 +50,9 @@ export class Form<T> extends Component<IFormState> {
         Object.assign(this, inputs);
         return this.container;
     }
-//Для OrderForm
-    toggleClass(element: Element, className: string, force?: boolean) {
+
+    //Для OrderForm
+    toggleClass(element: HTMLElement, className: string, force?: boolean) {
         if (force === undefined) {
             element.classList.toggle(className);
         } else {
